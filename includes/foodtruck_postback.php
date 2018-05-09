@@ -11,7 +11,12 @@ if(isset($_POST['submit'])){//show data
     echo '</pre>';
     */
     
+    //get user input, calculate total, display results here:
+    
 }else{//show form
+    
+    //loop through menu items and generate list here:
+    
     echo '
     <form action="" method="post">
         <p>
