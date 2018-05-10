@@ -3,7 +3,7 @@
 
 include 'menu_objects.php';
 
-if(isset($_POST['submit'])){//show data
+if(isset($_POST['submit'])){//show transaction result
     
     /* 
     echo '<pre>';
@@ -11,29 +11,38 @@ if(isset($_POST['submit'])){//show data
     echo '</pre>';
     */
     
-    //get user input, calculate total, display results here:
-    
 }else{//show form
+    global $config;
     
-    //loop through menu items and generate list here:
+    //start the form:
+    echo '<form action="" method="post">';
     
+    foreach ($config->items as $item) 
+    {//generate form block for each menu item
+        echo '
+        <form action="" method="post">
+            <p class="menuitem">
+                <label>
+                <h3>' . $item->Name . '</h3>
+                Quantity:<br />
+                <input type="text" name="item1" required="required" />
+                <br />';
+        foreach ($item->Extras as $extra) 
+        {//generate checkboxes for add-ons
+            echo '<input type="checkbox" name="' . $extra . '" value="' . $extra . '" /> '. $extra . '<br />';
+        }
+    }//end form block for each menu item
+
+    //finish off the form:
     echo '
-    <form action="" method="post">
-        <p>
-            <label>
-            <h3>' . $myItem->Name . '</h3>
-            Quantity:<br />
-            <input type="text" name="item1" required="required" />
-            <br />
-            <input type="checkbox" name="addon1" value="addon1" /> Add-On 1<br />
-            <input type="checkbox" name="addon2" value="addon2" /> Add-On 2<br />
-            <input type="checkbox" name="addon3" value="addon3" /> Add-On 3<br />
-            </label>
+    </label>
         </p>
         <p>
             <input type="submit" name="submit" value="Purchase" />
             <input type="reset" />
         </p>    
-    </form>    
+    </form>                    
     ';
-}
+
+    
+}//end show form

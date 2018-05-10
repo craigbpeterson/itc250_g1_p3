@@ -7,6 +7,14 @@ $myItem->addExtra('Salsa');
 $myItem->addExtra('Guacamole');
 $myItem->addExtra('Cheese');
 $myItem->addExtra('Hot Sauce');
+$config->items[] = $myItem;
+
+$myItem = new Item(2,'Hot Dog','The price is worth it!',199.99);
+$myItem->addExtra('Ketchup');
+$myItem->addExtra('Mustard');
+$myItem->addExtra('Relish');
+$myItem->addExtra('Cream Cheese');
+$config->items[] = $myItem;
 
 class Item
 {
