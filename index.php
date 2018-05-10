@@ -1,3 +1,12 @@
+<?php 
+//index.php
+
+//header.php does not exist...yet
+//when the page style has been completed, place <html> through </header> in the header.php file and un-comment the next line
+//include 'includes/header.php';
+
+?>
+
 <!DOCTYPE html>
 <html lang="en-us">
 
@@ -24,4 +33,11 @@
 
 </body>
 </html>
+
+<?php
+//footer.php does not exist...yet
+//when the page style has been completed, place <footer> through </html> in the footer.php file and un-comment the next line
+//include 'includes/footer.php';
+
+?>
 
