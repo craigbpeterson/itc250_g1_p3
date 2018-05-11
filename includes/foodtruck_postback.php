@@ -13,12 +13,14 @@ if(isset($_POST['submit'])){//show transaction result
     $extra1 = $_POST['item_1_extras'];
     $extra2 = $_POST['item_2_extras'];
     //shows string form of toppings
-    for($x=1; $x<count($extra1); $x++){
+    echo 'toppings: <br>';
+    for($x=0; $x<count($extra1); $x++){
         echo $extra1[$x] . ' ';
     }
-    for($x=1; $x<count($extra2); $x++){
+    for($x=0; $x<count($extra2); $x++){
         echo $extra2[$x] . ' ';
     }
+    echo '<br>';
     //shows price of items
     echo 'price of item 1: ' . $config->items[0]->Price . '<br>';
     echo 'price of item 2: ' . $config->items[1]->Price . '<br>';
@@ -37,7 +39,6 @@ if(isset($_POST['submit'])){//show transaction result
     $subtotal = $total1 + $total2;
     echo 'sub totals: ' . $subtotal . '<br>';
     
-    //count($extra2) might have use somewhere later
     echo '
         <div class="menuitem">
             <p class="itemname">Order Details</p>
@@ -46,8 +47,8 @@ if(isset($_POST['submit'])){//show transaction result
             <p>Item(s) Subtotal: ' 
                 . $subtotal . 
             '</p>
-            <p>Toppings: clever code /p>
-            <p>Grand Total: goes here<</p>
+            <p>Toppings: clever code</p>
+            <p>Grand Total: goes here</p>
         </div>
     ';
     echo '<br>var_dump: ';
