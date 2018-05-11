@@ -24,23 +24,27 @@ if(isset($_POST['submit'])){//show transaction result
         echo '
             <div class="menuitem">
                 <label>
-                <p class="itemname">' . $item->Name . '</p>
-                <p class="description">' . $item->Description . '</p>
-                <p>Quantity:<br />
-                    <input class="quantity" type="text" name="item_' . $item->ID . '" value="0" required="required" />
-                </p>
+                    <p class="itemname">' . $item->Name . '</p>
+                    <p class="description">' . $item->Description . '</p>
+                    <p>Quantity:<br />
+                        <input class="quantity" type="text" name="item_' . $item->ID . '" value="0" required="required" />
+                    </p>
+                </label>
                 <div class="extras">Add Extras (25&cent; each):
-                <br />';
+                <br />
+        ';
         foreach ($item->Extras as $extra) 
         {//generate checkboxes for extras
+            //' . $extra . '
             echo '
-                <input type="checkbox" name="item_' . $item->ID . '_extras[]" value="' . $extra . '" /> ' . $extra . '
+                <input type="checkbox" name="item_' . $item->ID . '_extras[]" id="' . str_replace(' ','',$extra) . '" value="' . $extra . '" />
+                <label for="' . str_replace(' ','',$extra) . '">' . $extra . '</label>
                 <br />
             ';
         }
         echo '
                 </div>
-                </label>
+                
             </div>
         ';
     }//end form block for each menu item
