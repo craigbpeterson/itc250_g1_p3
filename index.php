@@ -26,7 +26,6 @@ $foodTruckName = 'Food Truck Name';
     </header>
     
     <div class="orderform">
-        <h2>Menu</h2>
         <?php include "includes/foodtruck_postback.php" ?>
     </div>
     
