@@ -22,6 +22,7 @@ if (isset($_POST['submit'])) {//show transaction result
                     <th>Total</th>
                 </tr>
     ';
+    
     $items_total = 0;//init
     $extras_total = 0;
     foreach ($_POST as $key => $value)
@@ -133,6 +134,7 @@ if (isset($_POST['submit'])) {//show transaction result
             <div class="menuitem">
                 <label>
                     <p class="itemname">' . $item->Name . '</p>
+                    <p class="itemprice">$' . $item->Price . '</p>
                     <p class="description">' . $item->Description . '</p>
                     <p>Quantity:<br />
                         <input class="quantity" type="text" name="item_' . $item->ID . '" value="0" required="required" />

@@ -7,7 +7,7 @@ body {
 div.orderform {
     display: inline-block;
     border-radius: 1rem;
-    background: #ffe8bd;
+    background: #dedede;
 }
 
 div.orderform h2 {
@@ -15,21 +15,32 @@ div.orderform h2 {
 }
 
 div.menuitem {
+    float:left;
     margin:1rem;
     padding:1rem;
     border:1px #bdbdbd dashed;
     border-radius:1rem;
     background:#fff;
-    float:left;
+    min-width:250px;
 }
 
 div.menuitem p.itemname {
+    float:left;
     margin:0;
     font-size:2rem;
+    color: #e69500;
+}
+
+div.menuitem p.itemprice {
+    float:right;
+    margin:0;
+    font-size:1.5rem;
+    color:#009a1b;
 }
 
 div.menuitem p.description {
     margin-top:0;
+    clear:both;
 }
 
 input.quantity {
