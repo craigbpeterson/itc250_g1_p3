@@ -67,11 +67,11 @@ function showTransactionResult()
     $items_subtotal = 0; //init
     $extras_subtotal = 0; //init
     
-    /*
+    
     echo '<pre>';
     var_dump($_POST);
     echo'</pre>';
-    */
+    
     
     //start ITEMS ordered table
     //date format May 13, 2018, 1:16 am
@@ -153,6 +153,7 @@ function showTransactionResult()
         <table style="width:100%">
             <tr>
                 <th>Extra</th>
+                <th>Quantity</th>
                 <th>Price</th>
             </tr>
     ';
@@ -164,13 +165,28 @@ function showTransactionResult()
             
             foreach ($value as $extra_key => $extra) {
                 
-                $extras_subtotal += 0.25;
-            
+                //seperate string with _ as the delimiter
+                $key_array = explode('_',$key);
+                
+                //cast item number as an integer
+                $key_id = (int)$key_array[1];
+                
+                $associated_item_key = 'item_' . $key_id;
+                
+                $quantity_of_extra = $_POST[$associated_item_key];
+                
+                $extra_subtotal = $quantity_of_extra * 0.25; //calculates subtotal of each particular extra
+                
+                $extras_subtotal += $extra_subtotal; //adds to overall subtotal of all extras
+                
+                $extra_subtotal_output = money_format('%.2n', $extra_subtotal);
+                
                 //add row to EXTRAS table
                 $extras_html .= '
                 <tr>
                     <td>' . $extra . '</td>
-                    <td>$0.25</td>
+                    <td>' . $quantity_of_extra . '</td>
+                    <td>' . $extra_subtotal_output . '</td>
                 </tr>
                 ';
             }
@@ -183,7 +199,7 @@ function showTransactionResult()
     //finish EXTRAS table
     $extras_html .='
             <tr class="tabletotal">
-                <td class="tabletotaltitle">Extras Subtotal: </td>
+                <td colspan="2" class="tabletotaltitle">Extras Subtotal: </td>
                 <td>' . $extras_subtotal_output . '</td>
             </tr>
         </table>
