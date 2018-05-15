@@ -153,7 +153,7 @@ function showTransactionResult()
         <table style="width:100%">
             <tr>
                 <th>Extra</th>
-                <th>Quantity</th>
+                <th>Qty</th>
                 <th>Price</th>
             </tr>
     ';
