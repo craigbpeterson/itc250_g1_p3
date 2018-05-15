@@ -67,11 +67,11 @@ function showTransactionResult()
     $items_subtotal = 0; //init
     $extras_subtotal = 0; //init
     
-    
+    /*
     echo '<pre>';
     var_dump($_POST);
     echo'</pre>';
-    
+    */
     
     //start ITEMS ordered table
     //date format May 13, 2018, 1:16 am
