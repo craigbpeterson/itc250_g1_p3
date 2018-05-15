@@ -6,7 +6,7 @@ include 'menu_objects.php';
 if (isset($_POST['submit'])) {//show result
     setlocale(LC_MONETARY, 'en_US.UTF-8');
     
-    $status = checkQuantity(); //checks user input, returns $quantity_status
+    $status = checkQuantity(); //checks user input, returns a string for the following switch block
     
     switch($status)
     {
