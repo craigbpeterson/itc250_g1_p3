@@ -1,37 +1,96 @@
 <?php
 //foodtruck_postback.php
-
 include 'menu_objects.php';
-
-if (isset($_POST['submit'])) {//show transaction result
-    global $config;
+if (isset($_POST['submit'])) {//show result
     setlocale(LC_MONETARY, 'en_US.UTF-8');
     
-    echo '
-    <h2>Order Details</h2>
-    <h2>For now table display only works if there is both an item(s) and topping(s) for all options.</h2>
+    $status = checkQuantity(); //checks user input, returns $quantity_status
+    
+    switch($status)
+    {
+        case 'quantity is not a number':
+            echo '
+            <p class="inputerror">Quantity must be a number.</p>
+            ';
+            break;
+        
+        case 'quantity is less than 1':
+            echo '
+            <p class="inputerror">If you want food in your belly, please select at least one menu item.<p>
+            ';
+            break;
+        
+        case 'quantity is more than 0':
+            echo showTransactionResult();
+            break;
+            
+    }//end switch
+      
+} else {//show form
+    echo showForm();
+}
+/* FUNCTION DEFINITIONS */
+function checkQuantity() 
+{//this function checks if user has selected at least one item
+    $quantity_check = 0; //init
+    foreach ($_POST as $key => $value) 
+    {
+        if (substr($key,0,5) == 'item_') 
+        {
+            if (!is_numeric($value)) {
+                $quantity_status = 'quantity is not a number';
+                return $quantity_status;
+            } else {
+                $quantity_check += (int)$value;
+            }
+        }
+    }
+    
+    if ($quantity_check < 1) {
+        $quantity_status = 'quantity is less than 1';
+        
+    } elseif ($quantity_check > 0) {
+        $quantity_status = 'quantity is more than 0';
+    }
+    
+    return $quantity_status;
+}
+function showTransactionResult()
+{//this function gets user input, calculates totals, returns $html output
+    global $config;
+    $items_subtotal = 0; //init
+    $extras_subtotal = 0; //init
+    
+    /*
+    echo '<pre>';
+    var_dump($_POST);
+    echo'</pre>';
+    */
+    
+    //start ITEMS ordered table
+    //date format May 13, 2018, 1:16 am
+    $html = '
+        <h2>Order Details</h2>
+        <p style="margin-left:1rem; margin-top:0;">Order Date: ' . date("F j, Y, g:i a") . '</p>
         <div class="menuitem">
-            <p style="margin:0;">Order Date</p>
-            <p class="description">' . date("F j, Y, g:i a") . '</p>
+            <h3 style="margin-top:0;">Items Ordered:</h3>
             <table style="width:100%">
                 <tr>
-                    <th>Item</th>
+                    <th>Item Name</th>
                     <th>Qty</th>
                     <th>Price</th>
-                    <th># of Toppings</th>
-                    <th>Total</th>
+                    <th>Item Total</th>
                 </tr>
     ';
     
-    $items_total = 0;//init
-    $extras_total = 0;
-    foreach ($_POST as $key => $value)
+    //this foreach block generates the table rows of ITEMS ordered
+    foreach ($_POST as $key => $value) 
     {
         //check $key is an item or a topping
         if (substr($key,0,5) == 'item_') {
             
             //get qty, cast as int
-            $quantity = (int)$_POST[$key];
+            $quantity = (int)$value;
             
             //check if there is an order for this item
             if ($quantity > 0) {
@@ -48,89 +107,145 @@ if (isset($_POST['submit'])) {//show transaction result
                 //get name
                 $name = $config->items[$key_id - 1]->Name;
                 
-                //calculate and add to total
-                $items_total += $quantity * $price;
+                //calculate total for this item
+                $item_total = $quantity * $price;
                 
-                echo '
-                <tr>
-                    <td>' . $name . '</td>
-                    <td>' . $quantity . '</td>
-                    <td>' . $price . '</td>
+                //add to over items subtotal
+                $items_subtotal += $item_total;
+                
+                //money format
+                $price_output = money_format('%.2n', $price);
+                $item_total_output = money_format('%.2n', $item_total);
+                    
+                $html .= '
+                    <tr>
+                        <td>' . $name . '</td>
+                        <td>' . $quantity . '</td>
+                        <td>' . $price_output . '</td>
+                        <td>' . $item_total_output . '</td>
+                    </tr>
                 ';
             }
-        } elseif (substr($key,0,7)=='extras_') {
-            
-            //each topping is $0.25
-            $extras_total += $prev_quantity * count($value) * 0.25;
-            
-            echo '
-                    <td>' . $prev_quantity * count($value) . '</td>
-                    <td>' . money_format('%.2n', ($prev_quantity * count($value) * 0.25 + $prev_quantity * $prev_price)) . '</td>
-                </tr>
-            ';
-            
         }
-        //save qty & price for extras
-        $prev_quantity = (int)$_POST[$key];
-        $prev_price = (float)$config->items[$key_id - 1]->Price;
-        //finish <tr> if customer didn't select any toppings
-        /* // sandbox: $_POST[$key] != '0' && substr($key,0,4) == 'item'
-        if (...) {
-            
-            
-            echo '
-                    <td>0</td>
-                    <td>' . $prev_quantity * $prev_price . '</td>
-                </tr>
-            ';
-        }
-        */
     }
     
-    //calculate tax & totals
-    $subtotal = $items_total + $extras_total;
-    $tax = $subtotal * .101; //10.1%
-    $grand_total = $items_total + $extras_total + $tax;
+    //money format
+    $items_subtotal_output = money_format('%.2n', $items_subtotal);
+    
+    //finish ITEMS table
+    $html .= '
+            <tr class="tabletotal">
+                <td colspan=3 class="tabletotaltitle">Items Subtotal: </td>
+                <td>' . $items_subtotal_output . '</td>
+            </tr>
+        </table>
+    '; 
+    
+    //start EXTRAS ordered table
+    $extras_html = '
+        <h3>Extras Ordered:</h3>
+        <table style="width:100%">
+            <tr>
+                <th>Extra</th>
+                <th>Price</th>
+            </tr>
+    ';
+    
+    //this foreach block generates the table rows of EXTRAS ordered
+    foreach ($_POST as $key => $value) 
+    {
+        if (substr($key,0,7) == 'extras_') {
+            
+            foreach ($value as $extra_key => $extra) {
+                
+                $extras_subtotal += 0.25;
+            
+                //add row to EXTRAS table
+                $extras_html .= '
+                <tr>
+                    <td>' . $extra . '</td>
+                    <td>$0.25</td>
+                </tr>
+                ';
+            }
+        }
+    }
     
     //money format
-    $items_total = money_format('%.2n', $items_total);
-    $extras_total = money_format('%.2n', $extras_total);
-    $subtotal = money_format('%.2n', $subtotal);
-    $tax = money_format('%.2n', $tax);
-    $grand_total = money_format('%.2n', $grand_total);
+    $extras_subtotal_output = money_format('%.2n', $extras_subtotal);
     
-    //date format May 13, 2018, 1:16 am
-    echo '
-            </table>
-        </div>
-        <div class="menuitem">
-            <p style="margin-top:0;">Order Summary</p>
-            <p>Item(s) Total: ' . $items_total . '</p>
-            <p>Topping(s) Total: ' . $extras_total . '</p>
-            <p>Subtotal: ' . $subtotal . '</p>
-            <p>Tax: ' . $tax . '</p>
-            <p style="margin-bottom: 0;">Grand Total: ' . $grand_total . '</p>
+    //finish EXTRAS table
+    $extras_html .='
+            <tr class="tabletotal">
+                <td class="tabletotaltitle">Extras Subtotal: </td>
+                <td>' . $extras_subtotal_output . '</td>
+            </tr>
+        </table>
         </div>
     ';
     
-    echo '<div class="menuitem">var_dump: ';
-    echo '<br>';
-    echo '<pre>';
-    var_dump($_POST);
-    echo '</pre></div>';
+    if ($extras_subtotal == 0) {
+        $extras_html = '
+            <h3>Extras Ordered:</h3>
+            <p>No extras were ordered.</p>
+            </div>
+            ';
+    }
     
-} else {//show form
+    $html .= $extras_html;
+    
+    //calculate tax & totals
+    $order_subtotal = $items_subtotal + $extras_subtotal;
+    $tax = $order_subtotal * .101; //10.1%
+    $grand_total = $order_subtotal + $tax;
+    
+    //money format
+    $order_subtotal = money_format('%.2n', $order_subtotal);
+    $tax = money_format('%.2n', $tax);
+    $grand_total = money_format('%.2n', $grand_total);
+    //display order summary
+    $html .= '
+        <div class="menuitem">
+            <h3 style="margin-top:0;">Order Summary:</h3>
+            <table style="width:100%">
+                <tr>
+                    <td>Item(s) Subtotal: </td>
+                    <td>' . $items_subtotal_output . '</td>
+                </tr>
+                <tr>
+                    <td>Extra(s) Subtotal: </td>
+                    <td>' . $extras_subtotal_output . '</td>
+                </tr>
+                <tr>
+                    <td>Order Subtotal: </td>
+                    <td>' . $order_subtotal . '</td>
+                </tr>
+                <tr>
+                    <td>Tax: </td>
+                    <td>' . $tax . '</td>
+                </tr>
+                <tr class="tabletotal">
+                    <td>Grand Total: </td>
+                    <td>' . $grand_total . '</td>
+                </tr>
+            </table>
+        </div>
+    ';
+    return $html;
+}
+function showForm()
+{
     global $config;
     
     //start the form:
-    echo '
-    <h2>Menu</h2>
+    $html = '
+    <h2 class="main-course"><span>Our Delicious Menu Items</span></h2>
         <form action="" method="post">
     ';
     
     foreach ($config->items as $item)
     {//generate form block for each menu item
-        echo '
+        $html .= '
             <div class="menuitem">
                 <label>
                     <p class="itemname">' . $item->Name . '</p>
@@ -145,27 +260,27 @@ if (isset($_POST['submit'])) {//show transaction result
         ';
         foreach ($item->Extras as $extra)
         {//generate checkboxes for extras
-            echo '
+            $html .= '
                 <input type="checkbox" name="extras_' . $item->ID . '[]" id="' . str_replace(' ','',$extra) . '" value="' . $extra . '" />
                 <label for="' . str_replace(' ','',$extra) . '">' . $extra . '</label>
                 <br />
             ';
         }
-        echo '
+        $html .= '
                 </div>
                 
             </div>
         ';
+        
     }//end form block for each menu item
-
     //finish off the form:
-    echo '
+    $html .= '
             <div class="formbuttons">
                 <input type="submit" name="submit" value="Purchase" />
                 <input type="reset" />
             </div>    
         </form>
     ';
-
     
-}//end show form
+    return $html;
+}
