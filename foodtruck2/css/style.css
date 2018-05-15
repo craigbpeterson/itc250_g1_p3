@@ -1,0 +1,370 @@
+/* Website template by freewebsitetemplates.com */
+@font-face {
+    font-family: 'DynalightRegular';
+    src: url('../fonts/dynalight-regular-webfont.eot');
+    src: url('../fonts/dynalight-regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/dynalight-regular-webfont.woff') format('woff'),
+         url('../fonts/dynalight-regular-webfont.ttf') format('truetype'),
+         url('../fonts/dynalight-regular-webfont.svg#DynalightRegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+	background: #262523 url('../images/bg-body.jpg') no-repeat center top;
+	color:#ffffff;
+	margin:0px;
+}
+
+#infos li.home a, #infos li.phone a, #infos li.address a,
+#footer ul.advertise li.delivery a, #footer ul.advertise li.connect a.fb, #footer ul.advertise li.connect a.twitr {
+	background: url(../images/icons.gif) no-repeat;
+}
+#navigation li a, #contents h2 {
+	background: url(../images/braces-left.gif) no-repeat;
+}
+#navigation li a span, #contents h2 span {
+	background: url(../images/braces-right.gif) no-repeat;
+}
+
+/*-------------------------- Header --------------------------*/
+#header{
+	width: 960px;
+	margin: 0px auto 105px;
+	position: relative;
+}
+#header span.signboard {
+	float: right;
+	background: url(../images/schedule.gif) no-repeat;
+	display: block;
+	height: 125px;
+	width: 154px;
+	position: relative;
+	z-index: 9;
+}
+#header .tagline {
+	background: url(../images/breakfast-buffet.gif) no-repeat;
+	display: inline-block;
+	height: 80px;
+	width: 462px;
+}
+
+#infos {
+	display: inline-block;
+	width: 790px;
+	margin: 0px 0px 20px;
+	padding: 20px 0px 0px 10px;
+}
+#infos li {
+	float: left;
+	font-family: 'Times New Roman', Times, serif;
+	font-size: 17px;
+	list-style-type: none;
+	padding: 0px 10px;
+}
+#infos li a {
+	color:#ffffff;
+	display:block;
+	height: 21px; 
+	padding-top: 6px;
+	text-decoration:none;
+	text-shadow: 0 1px #252525, 0 1px #252525, 0 -1px #252525, -1px 0 #252525;
+}
+#infos li a:hover {
+	color: #6dcff6;
+}
+#infos li.home a {
+	background-position: 0 -73px;
+	padding-left: 35px;
+}
+#infos li.phone a {
+	background-position: 0 -147px;
+	padding-left: 39px;
+}
+#infos li.address a {
+	background-position: 0 -110px;
+	padding-left: 40px;
+}
+
+#logo {
+	background: url(../images/foodtruck.png) no-repeat;
+	display: inline-block;
+	height: 83px;
+	width: 330px;
+	margin-right: 5px;
+}
+
+#navigation {
+	background: url(../images/bg-navigation.gif) no-repeat left top ;
+	height: 32px;
+	width: 550px;
+	margin: 0px;
+	padding: 15px 10px;
+	position: absolute;
+	top: 92px;
+	right: 40px;
+}
+#navigation li {
+	float: left;
+	height: 30px;
+	list-style-type: none;
+	margin: 0px 3px;
+}
+#navigation li a {
+	background-position: 0 -90px;
+	color: #ffffff;
+	display: block;
+	font-family: 'DynalightRegular';
+	font-size: 25px;
+	height: 25px;
+	line-height: 25px;
+	padding-left: 16px;
+	text-decoration: none;
+}
+#navigation li a span {
+	float: right;
+	background-position: right -90px;
+	display: inline-block;
+	height: 25px;
+	margin: 0px;
+	padding-right: 22px;
+}
+#navigation li a:hover, #navigation .current, #navigation .current a {
+	background-position: 0 -52px;
+	color: #ffca00;
+}
+#navigation li a:hover span, #navigation .current a span {
+	background-position: right -52px;
+}
+
+/*-------------------------- Contents --------------------------*/
+#body {
+	width: 960px;
+	margin: 0px auto 50px;
+}
+
+/*-------------  MENU FORM FOR POSTBACK  -----------------*/
+
+div.orderform {
+    display: inline-block;
+    border-radius: 1rem;
+    background: #dedede;
+}
+
+div.orderform h2 {
+    margin: 1rem 0 0 1rem;
+}
+
+div.menuitem {
+    float:left;
+    margin:1rem;
+    padding:1rem;
+    border:1px #bdbdbd dashed;
+    border-radius:1rem;
+    background:#fff;
+    min-width:250px;
+}
+
+div.menuitem p.itemname {
+    float:left;
+    margin:0;
+    font-size:2rem;
+    color: #e69500;
+}
+
+div.menuitem p.itemprice {
+    float:right;
+    margin:0;
+    font-size:1.5rem;
+    color:#009a1b;
+}
+
+div.menuitem p.description {
+    margin-top:0;
+    clear:both;
+}
+
+input.quantity {
+    width: 3rem;
+    margin-top: 0.5rem;
+    padding: 0.5rem;
+    font-size: 18px;
+    border-radius: 6px;
+    border: 2px black solid;
+}
+
+div.formbuttons {
+    clear:both;
+    margin-bottom:1rem;
+    text-align:center;
+}
+
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+th, td {
+    padding: 5px;
+    text-align: left;    
+}
+
+
+
+/*------------  END OF MENU  ----------------------------*/
+
+/* THIS IS PART OF THE TEMPLATE CODE THAT MIGHT MESS WITH FORMATTING */
+
+#contents {
+    max-width:800px;
+    
+	background-color: #ffffff;
+    font-family:Arial, sans-serif;
+	color: #373737;
+	line-height: 24px;
+	border-top: 2px outset #393939;
+	border-bottom: 2px inset #393939;
+	margin: 0px 0px 50px;
+	padding: 22px 0px;
+	text-align: center;
+}
+#contents h2 {
+	background-position: 0 0;
+	color: #265d84;
+	display: inline-block;
+	font-family: 'DynalightRegular';
+	font-size: 41px;
+	height: 41px;
+	line-height: 41px;
+	margin: 0px 0px 42px;
+	padding-left: 22px;
+}
+#contents h2 span { 
+	background-position: right 0;
+	display: block;
+	height: 41px;
+	padding-right: 20px;
+}
+
+#contents p {
+	letter-spacing: 1px;
+	margin: 0px;
+	padding: 0 10px 24px;
+}
+#contents p a {
+	color: #373737;
+	font-weight: bold;
+}
+
+/*------------------------- Footer -------------------------*/
+#footer	{
+	color: #949494;
+	font-family: Times New Roman;
+	width: 960px;
+	margin: 0 auto;
+    float: none;
+}
+#footer ul.advertise {
+	display: inline-block;
+	width: 940px;
+	margin: 0px auto 41px;
+	padding: 0px 10px;
+}
+#footer ul.advertise li {
+	float: left;
+	background: url(../images/braces.gif) 15px 0 no-repeat;
+	list-style-type: none;
+	height: 180px;
+	width: 210px;
+	margin-right: 13px;
+	padding: 0px 45px;
+	text-align: center;
+	overflow: hidden;
+}
+#footer ul.advertise li h2 {
+	color: #6dcff6;
+	font-family: 'DynalightRegular', cursive;
+	font-size: 53px;
+	line-height: 53px;
+	font-weight: normal;
+	margin: 0px;
+	padding: 6px 0;
+} 
+#footer ul.advertise li p, #footer ul.advertise li a {
+	color: #ffffff;
+	font-size: 1.2em;
+	line-height: 20px;
+	margin: 0px;
+	text-decoration: none;
+}
+
+#footer ul.advertise li.delivery a {
+	background-position: 170px 10px;
+	display: block;
+	width: 170px;
+	padding-right: 16px;
+	padding-top: 6px;
+	text-shadow: 1px 1px 1px #252525;
+}
+#footer ul.advertise li.event h2 {
+	width: 215px;
+}
+#footer ul.advertise li.connect a.fb {
+	background-position: 0 -26px;
+	display: inline-block;
+	height: 37px;
+	width: 17px;
+	margin-right: 8px;
+}
+#footer ul.advertise li.connect a.twitr {
+	background-position: 0 -184px;
+	display: inline-block;
+	height: 37px;
+	width: 49px;
+}
+#footer ul.advertise li p a, #footer ul.advertise li.delivery p a {
+	background: none;
+	display: inline;
+	font-style: oblique;
+	padding-right: 0px;
+}
+#footer ul.advertise li p a:hover {
+	color: #949494;
+}
+
+#footer div {
+	line-height: 24px;
+	text-align: center;
+}
+#footer div a {
+	color: #949494;
+	padding: 0px 10px;
+	text-decoration: none;
+}
+#footer div a:hover, #footer div ul li.selected a {
+	color: #ffffff;
+}
+#footer div ul {
+	display: inline-block;
+	height: 21px;
+	margin: 0px auto;
+	padding: 0px;
+}
+#footer div ul li {
+	float: left;
+	list-style-type: none;
+	text-align: center;
+}
+#footer div ul li a {
+	border-right: 1px solid #949494;
+}
+#footer div ul li.last a {
+	border: 0px;
+}
+#footer div span {
+	display: block;
+	line-height: 24px;
+	margin-bottom: 20px;
+}
+#footer div span a {
+	padding: 0px;
+}
