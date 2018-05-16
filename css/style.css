@@ -221,6 +221,12 @@ td.tabletotaltitle {
     text-align:right;
 }
 
+#contents p.inputerror {
+    padding: 1rem;
+    color: #820000;
+    font-size: 1.5rem;
+}
+
 
 
 /*------------  END OF MENU  ----------------------------*/
