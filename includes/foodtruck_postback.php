@@ -19,7 +19,7 @@ if (isset($_POST['submit'])) {//show result
         
         case 'quantity is less than 1':
             echo '
-            <p class="inputerror">If you want food in your belly, please select at least one menu item.<p>
+            <p class="inputerror">If you want food in your belly, please select at least one menu item.</p>
             ';
             break;
         
