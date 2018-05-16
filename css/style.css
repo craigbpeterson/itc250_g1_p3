@@ -159,14 +159,13 @@ div.orderform h2 {
 }
 
 div.menuitem {
-    float:left;
     margin:4%;
     padding:1rem;
     border:1px #bdbdbd dashed;
     border-radius:1rem;
     background:#fff;
     min-width:250px;
-    
+    display:inline-block;
 }
 
 div.menuitem p.itemname {
