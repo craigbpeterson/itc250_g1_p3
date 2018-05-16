@@ -1,10 +1,13 @@
 <?php
 //foodtruck_postback.php
 include 'menu_objects.php';
+
+
 if (isset($_POST['submit'])) {//show result
     setlocale(LC_MONETARY, 'en_US.UTF-8');
     
-    $status = checkQuantity(); //checks user input, returns $quantity_status
+    $status = checkQuantity(); //checks user input, returns a string for the following switch block
+
     
     switch($status)
     {
@@ -29,7 +32,9 @@ if (isset($_POST['submit'])) {//show result
 } else {//show form
     echo showForm();
 }
+
 /* FUNCTION DEFINITIONS */
+
 function checkQuantity() 
 {//this function checks if user has selected at least one item
     $quantity_check = 0; //init
@@ -55,6 +60,7 @@ function checkQuantity()
     
     return $quantity_status;
 }
+
 function showTransactionResult()
 {//this function gets user input, calculates totals, returns $html output
     global $config;
@@ -70,9 +76,11 @@ function showTransactionResult()
     //start ITEMS ordered table
     //date format May 13, 2018, 1:16 am
     $html = '
+
         <h2>
             <span>Order Details</span>
         </h2>
+
         <p style="margin-left:1rem; margin-top:0;">Order Date: ' . date("F j, Y, g:i a") . '</p>
         <div class="menuitem">
             <h3 style="margin-top:0;">Items Ordered:</h3>
@@ -149,6 +157,9 @@ function showTransactionResult()
         <table style="width:100%">
             <tr>
                 <th>Extra</th>
+
+                <th>Qty</th>
+
                 <th>Price</th>
             </tr>
     ';
@@ -160,13 +171,30 @@ function showTransactionResult()
             
             foreach ($value as $extra_key => $extra) {
                 
-                $extras_subtotal += 0.25;
-            
+                //seperate string with _ as the delimiter
+                $key_array = explode('_',$key);
+                
+                //cast item number as an integer
+                $key_id = (int)$key_array[1];
+                
+                $associated_item_key = 'item_' . $key_id;
+                
+                $quantity_of_extra = $_POST[$associated_item_key];
+                
+                $extra_subtotal = $quantity_of_extra * 0.25; //calculates subtotal of each particular extra
+                
+                $extras_subtotal += $extra_subtotal; //adds to overall subtotal of all extras
+                
+                $extra_subtotal_output = money_format('%.2n', $extra_subtotal);
+
                 //add row to EXTRAS table
                 $extras_html .= '
                 <tr>
                     <td>' . $extra . '</td>
-                    <td>$0.25</td>
+
+                    <td>' . $quantity_of_extra . '</td>
+                    <td>' . $extra_subtotal_output . '</td>
+
                 </tr>
                 ';
             }
@@ -179,7 +207,9 @@ function showTransactionResult()
     //finish EXTRAS table
     $extras_html .='
             <tr class="tabletotal">
-                <td class="tabletotaltitle">Extras Subtotal: </td>
+
+                <td colspan="2" class="tabletotaltitle">Extras Subtotal: </td>
+
                 <td>' . $extras_subtotal_output . '</td>
             </tr>
         </table>
@@ -205,6 +235,7 @@ function showTransactionResult()
     $order_subtotal = money_format('%.2n', $order_subtotal);
     $tax = money_format('%.2n', $tax);
     $grand_total = money_format('%.2n', $grand_total);
+
     //display order summary
     $html .= '
         <div class="menuitem">
@@ -233,15 +264,21 @@ function showTransactionResult()
             </table>
         </div>
     ';
+
+
     return $html;
 }
+
+
 function showForm()
 {
     global $config;
     
     //start the form:
     $html = '
+
     <h2 class="main-course"><span>Our Delicious Menu Items</span></h2>
+
         <form action="" method="post">
     ';
     
@@ -285,4 +322,6 @@ function showForm()
     ';
     
     return $html;
+
 }
+
