@@ -1,7 +1,7 @@
 <?php 
 //index.php
 
-$foodTruckName = 'Food Truck Name';
+$foodTruckName = 'Go Food Truck Go!';
 ?>
 
 <!DOCTYPE html>
