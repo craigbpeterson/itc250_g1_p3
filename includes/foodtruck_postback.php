@@ -1,5 +1,16 @@
 <?php
-//foodtruck_postback.php
+/**
+ * foodtruck_postback.php is a single page web application that displays a food truck order form for the user.
+ * 
+ * The application also displays the results of the user's order and calculates totals and tax.
+ *
+ * @author Craig Peterson <craig.peterson@seattlecentral.edu>, 
+ * Robert Hogue roberto.hogue@gmail.com, and John Nguyen <john.nguyen3@seattlecentral.edu>
+ * @version 1.0 2018/05/16 
+ * @link https://github.com/craigbpeterson/itc250_g1_p3, http://craigpeterson.video/itc250/projects/p3_foodtruck/final/
+ * @license http://www.apache.org/licenses/LICENSE-2.0
+ * @todo none
+ */
 include 'menu_objects.php';
 
 
