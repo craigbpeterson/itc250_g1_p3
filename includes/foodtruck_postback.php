@@ -70,7 +70,9 @@ function showTransactionResult()
     //start ITEMS ordered table
     //date format May 13, 2018, 1:16 am
     $html = '
-        <h2>Order Details</h2>
+        <h2>
+            <span>Order Details</span>
+        </h2>
         <p style="margin-left:1rem; margin-top:0;">Order Date: ' . date("F j, Y, g:i a") . '</p>
         <div class="menuitem">
             <h3 style="margin-top:0;">Items Ordered:</h3>
